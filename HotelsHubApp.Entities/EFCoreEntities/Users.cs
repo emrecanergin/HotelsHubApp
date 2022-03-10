@@ -2,10 +2,8 @@
 
 namespace HotelsHubApp.Entities.EFCoreEntities
 {
-    public class Users : IEntity
+    public class Users : BaseEntity, IEntity
     {
-        [Key]
-        public int Id { get; set; }
         public int AgentId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }

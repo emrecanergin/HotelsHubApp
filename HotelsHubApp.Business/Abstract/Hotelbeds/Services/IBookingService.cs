@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotelsHubApp.Entities.EFCoreEntities
+namespace HotelsHubApp.Business.Abstract.Hotelbeds.Services
 {
-    internal class Class1
+    public interface IBookingService
     {
     }
 }

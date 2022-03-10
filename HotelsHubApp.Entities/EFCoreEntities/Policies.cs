@@ -1,11 +1,9 @@
 ﻿using System;
 
-
 namespace HotelsHubApp.Entities.EFCoreEntities
 {
-    public class Policies : IEntity
+    public class Policies : BaseEntity, IEntity
     {
-        public int Id { get; set; }
         public decimal Price { get; set; }
         public int Currency { get; set; }
         public DateTime StartDate { get; set; }

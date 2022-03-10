@@ -1,6 +1,6 @@
 ﻿using Business.BusinessModel.MainModel.model;
-using HotelsHubApp.Business.Abstract;
-using HotelsHubApp.Business.Abstract.Requests.Hotelbeds;
+using HotelsHubApp.Business.Abstract.Hotelbeds.Requests;
+using HotelsHubApp.Business.Abstract.Hotelbeds.Services;
 using HotelsHubApp.Business.BusinessModels.HotelbedsModel.messages;
 using HotelsHubApp.Business.BusinessModels.MainModel.messages;
 using HotelsHubApp.Business.Helper;
@@ -33,7 +33,7 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
 
         [LogAspect]
         [ValidationAspect(typeof(SearchRequestValidator))]
-        public async Task<Result<SearchResponse>> HotelsResponse(HotelsHubApp.Business.BusinessModels.MainModel.messages.SearchRequest request)
+        public async Task<Result<SearchResponse>> HotelsResponse(SearchRequest request)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
             }
         }
           
-        public List<Hotel> GetHotels(AvailabilityRS response, HotelsHubApp.Business.BusinessModels.MainModel.messages.SearchRequest request)
+        public List<Hotel> GetHotels(AvailabilityRS response, SearchRequest request)
         {
             var mappedBody = _responseMap.Mapping(response);
 

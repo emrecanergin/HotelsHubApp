@@ -1,11 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace HotelsHubApp.Entities.EFCoreEntities
+﻿namespace HotelsHubApp.Entities.EFCoreEntities
 {
-    public class ChargeType : IEntity
+    public class ChargeType : BaseEntity, IEntity
     {
-        [Key]
-        public int Id { get; set; }
         public string Type { get; set; }
     }
 }

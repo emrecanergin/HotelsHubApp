@@ -2,16 +2,13 @@
 
 namespace HotelsHubApp.Entities.EFCoreEntities
 {
-    public class Reservation : IEntity
+    public class Reservation : BaseEntity, IEntity
     {
         public Reservation()
         {
             Policies = new List<Policies>();
             TaxesAndFees = new List<TaxesAndFees>();
         }
-       
-        [Key]
-        public int Id { get; set; }     
         public DateTime CheckIn { get; set; }   
         public DateTime CheckOut { get; set; }       
         public int HotelCode { get; set; }       
@@ -24,6 +21,5 @@ namespace HotelsHubApp.Entities.EFCoreEntities
         public virtual ICollection<TaxesAndFees> TaxesAndFees { get; set; }
         public int AgentId { get; set; }
         public virtual Users User { get; set; }
-
     }
 }

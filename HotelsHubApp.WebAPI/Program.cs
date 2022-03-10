@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Core.DataAccess.Context;
 using HotelsHubApp.Business.DependencyResolvers.Autofac;
 using HotelsHubApp.Business.HttpRequests.Hotelbeds;
 using HotelsHubApp.Core.DependencyResolvers.Autofac;
@@ -9,6 +10,7 @@ using HotelsHubApp.Core.RedisClient.Concrete;
 using HotelsHubApp.Core.RedisClient.Options;
 using HotelsHubApp.Core.Utilities.IoC;
 using HotelsHubApp.WebAPI.Middleware;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Serilog;
 using System.Text.Json.Serialization;
@@ -48,6 +50,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();
 builder.Services.AddDependencyResolvers(new IBaseModule[] { new CoreModule() });
 builder.Services.AddHttpClient<HotelbedsService>();
+builder.Services.AddDbContext<HotelbedsDBContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:ConnectionString"]);
+});
 
 
 var app = builder.Build();

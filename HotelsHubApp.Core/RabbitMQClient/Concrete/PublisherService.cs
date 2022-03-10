@@ -5,6 +5,7 @@ using System.Text.Json;
 
 namespace HotelsHubApp.Core.RabbitMQClient.Concrete
 {
+    //this page must be recoding!!! (exchange flexibility etc.)
     public class PublisherService : IPublisherService
     {
         IRabbitMqService _rabbitMqService;

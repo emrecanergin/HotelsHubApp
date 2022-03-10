@@ -1,7 +1,8 @@
-﻿using HotelsHubApp.Business.Abstract.Requests.Hotelbeds;
+﻿using HotelsHubApp.Business.Abstract.Hotelbeds.Requests;
 using HotelsHubApp.Business.BusinessModels.HotelbedsModel.common;
 using HotelsHubApp.Business.BusinessModels.HotelbedsModel.messages;
 using HotelsHubApp.Business.BusinessModels.HotelbedsModel.model;
+using HotelsHubApp.Business.BusinessModels.MainModel.messages;
 using HotelsHubApp.Business.HttpRequests.Hotelbeds;
 
 namespace HotelsHubApp.Business.Concrete.Hotelbeds.Requests
@@ -15,7 +16,7 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Requests
             _hotelbedsService = hotelbedsService;
         }  
         
-        public AvailabilityRQ CreateHotelbedsRequestBody(BusinessModels.MainModel.messages.SearchRequest request)
+        public AvailabilityRQ CreateHotelbedsRequestBody(SearchRequest request)
         {
             List<Occupancy> occupancies = new List<Occupancy>();
             List<Pax> paxlist = new();
@@ -59,7 +60,7 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Requests
             return total;
         }
 
-        public async Task<AvailabilityRS> SearchInHotelbeds(BusinessModels.MainModel.messages.SearchRequest request)
+        public async Task<AvailabilityRS> SearchInHotelbeds(SearchRequest request)
         {
             var requestBody = CreateHotelbedsRequestBody(request);
             try

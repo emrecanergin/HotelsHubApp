@@ -1,9 +1,7 @@
-﻿
-namespace HotelsHubApp.Entities.EFCoreEntities
+﻿namespace HotelsHubApp.Entities.EFCoreEntities
 {
-    public class TaxesAndFees : IEntity
+    public class TaxesAndFees : BaseEntity, IEntity
     {
-        public int Id { get; set; }
         public bool IncludedPrice { get; set; }
         public int Description { get; set; }
         public bool Mandatory { get; set; }

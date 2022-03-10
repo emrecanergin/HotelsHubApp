@@ -1,7 +1,7 @@
 ﻿using HotelsHubApp.Business.BusinessModels.HotelbedsModel.messages;
 using HotelsHubApp.Business.BusinessModels.MainModel.messages;
 
-namespace HotelsHubApp.Business.Abstract.Requests.Hotelbeds
+namespace HotelsHubApp.Business.Abstract.Hotelbeds.Requests
 {
     public interface ISearchRequest
     {
