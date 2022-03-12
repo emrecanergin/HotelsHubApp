@@ -20,7 +20,7 @@ namespace HotelContents.Concrete
             client.BaseAddress = new Uri("https://api.test.hotelbeds.com/hotel-content-api/1.0/hotels");
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             client.DefaultRequestHeaders.Add("Accept-Encoding", "*");
-            client.DefaultRequestHeaders.Add("Api-key", "b4036e737662995f3452af42bc59e114");
+            client.DefaultRequestHeaders.Add("Api-key", "");
             client.DefaultRequestHeaders.Add("X-Signature", Signature.CreateSignature());
             
             HttpResponseMessage data = await client.GetAsync($"?from={from}&to={to}&destinationCode={destinationCode}");

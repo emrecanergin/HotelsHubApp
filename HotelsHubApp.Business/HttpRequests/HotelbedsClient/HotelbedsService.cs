@@ -17,7 +17,7 @@ namespace HotelsHubApp.Business.HttpRequests.Hotelbeds
             _httpClient.BaseAddress = new Uri("https://api.test.hotelbeds.com/");
             _httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
             _httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "*");
-            _httpClient.DefaultRequestHeaders.Add("Api-key", "b4036e737662995f3452af42bc59e114");
+            _httpClient.DefaultRequestHeaders.Add("Api-key", "");
             _httpClient.DefaultRequestHeaders.Add("X-Signature", Signature.CreateSignature());
         }
         
