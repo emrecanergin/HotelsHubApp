@@ -1,6 +1,6 @@
 ﻿using HotelsHubApp.Business.BusinessModels.HotelbedsModel.common;
 
-namespace Business.BusinessModel.MainModel.model
+namespace HotelsHubApp.Business.BusinessModels.MainModel.model
 {
     public class HotelFilter
     {

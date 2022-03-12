@@ -56,6 +56,7 @@ builder.Services.AddDbContext<HotelbedsDBContext>(options =>
 });
 
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

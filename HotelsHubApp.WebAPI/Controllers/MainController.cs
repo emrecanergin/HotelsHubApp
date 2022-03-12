@@ -1,4 +1,4 @@
-﻿using HotelsHubApp.Business.Abstract;
+﻿using HotelsHubApp.Business.Abstract.Hotelbeds.Services;
 using HotelsHubApp.Business.BusinessModels.MainModel.messages;
 using HotelsHubApp.WebAPI;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +10,13 @@ namespace WebAPI.Controllers
     public class MainController : ControllerBase
     {
         private readonly ISearchService _searchService;
+        private readonly ICheckRateService _checkRateService;
 
-        public MainController(ISearchService searchService)
+
+        public MainController(ISearchService searchService, ICheckRateService checkRateService)
         {
             _searchService = searchService;
-
+            _checkRateService = checkRateService;
         }
 
         [HttpPost]
@@ -27,6 +29,24 @@ namespace WebAPI.Controllers
             }
 
             return BadRequest(new ApiResponse<object> { ErrorMessage = response.Message });
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> CheckRate(CheckRequest request)
+        {
+            var response = await _checkRateService.CheckRateResponse(request);
+            if (response.Success)
+            {
+                return Ok(new ApiResponse<CheckResponse>(response.Data));
+            }
+            return Ok(response);
+            //return BadRequest(new ApiResponse<object> { ErrorMessage = response.Message });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Book(BookingRequest request)
+        {
+            return Ok();
         }
 
     }

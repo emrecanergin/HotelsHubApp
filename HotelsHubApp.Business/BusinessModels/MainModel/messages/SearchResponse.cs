@@ -1,6 +1,4 @@
-﻿using Business.BusinessModel.MainModel.model;
-
-
+﻿using HotelsHubApp.Business.BusinessModels.MainModel.model;
 
 namespace HotelsHubApp.Business.BusinessModels.MainModel.messages
 {

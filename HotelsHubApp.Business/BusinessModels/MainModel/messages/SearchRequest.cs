@@ -1,5 +1,5 @@
-﻿using Business.BusinessModel.MainModel.model;
-using System;
+﻿using HotelsHubApp.Business.BusinessModels.MainModel.model;
+
 
 
 namespace HotelsHubApp.Business.BusinessModels.MainModel.messages

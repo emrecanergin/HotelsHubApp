@@ -1,8 +1,10 @@
-﻿namespace HotelsHubApp.Business.BusinessModels.MainModel.messages
+﻿using HotelsHubApp.Business.BusinessModels.HotelbedsModel.model;
+
+namespace HotelsHubApp.Business.BusinessModels.MainModel.messages
 {
     public class CheckRequest
     {
-        public Room rooms { get; set; }
+        public CheckRateRoom rooms { get; set; }
     }
  
 }

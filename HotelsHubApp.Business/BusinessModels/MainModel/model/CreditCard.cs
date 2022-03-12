@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.BusinessModel.MainModel.model
+namespace HotelsHubApp.Business.BusinessModels.MainModel.model
 {
     public class CreditCard
     {

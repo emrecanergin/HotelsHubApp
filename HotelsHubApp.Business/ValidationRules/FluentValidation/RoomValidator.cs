@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using HotelsHubApp.Business.BusinessModels.MainModel.messages;
+using HotelsHubApp.Business.BusinessModels.HotelbedsModel.model;
 
 namespace HotelsHubApp.Business.ValidationRules.FluentValidation
 {
-    public class RoomValidator : AbstractValidator<Room>
+    public class RoomValidator : AbstractValidator<CheckRateRoom>
     {
         public RoomValidator()
         {

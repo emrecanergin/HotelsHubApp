@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HotelsHubApp.Business.BusinessModels.HotelbedsModel.messages;
 using HotelsHubApp.Business.Helper.ResponseMappping.Models;
+using System.Net.Http.Json;
 
 namespace HotelsHubApp.Business.Helper.ResponseMappping
 {
@@ -14,6 +15,11 @@ namespace HotelsHubApp.Business.Helper.ResponseMappping
         }
         public MappedBody Mapping(AvailabilityRS body)
         {
+            if(body.hotels.hotels == null)
+            {
+                var res = new MappedBody { Hotels = null };
+                return res;
+            }
             foreach (var hotel in body.hotels.hotels)
             {
                 SingleHotel singleHotel = new();

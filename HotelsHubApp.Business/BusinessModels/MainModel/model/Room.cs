@@ -1,10 +1,11 @@
-﻿using System;
+﻿using HotelsHubApp.Business.BusinessModels.MainModel.bookingModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Business.BusinessModel.MainModel.model
+namespace HotelsHubApp.Business.BusinessModels.MainModel.model
 {
 
     public class Room

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Business.BusinessModel.MainModel.model
+namespace HotelsHubApp.Business.BusinessModels.MainModel.model
 {
     public class RateKey
     {

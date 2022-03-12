@@ -1,13 +1,11 @@
-﻿using Business.BusinessModel.MainModel.model;
-using HotelsHubApp.Business.Abstract.Hotelbeds.Requests;
+﻿using HotelsHubApp.Business.Abstract.Hotelbeds.Requests;
 using HotelsHubApp.Business.Abstract.Hotelbeds.Services;
 using HotelsHubApp.Business.BusinessModels.HotelbedsModel.messages;
 using HotelsHubApp.Business.BusinessModels.MainModel.messages;
+using HotelsHubApp.Business.BusinessModels.MainModel.model;
 using HotelsHubApp.Business.Helper;
 using HotelsHubApp.Business.Helper.ResponseMappping;
-using HotelsHubApp.Business.ValidationRules.FluentValidation;
 using HotelsHubApp.Core.Aspects.Autofac.Logging;
-using HotelsHubApp.Core.Aspects.Autofac.Validation;
 using HotelsHubApp.Core.RedisClient.Abstract;
 using HotelsHubApp.Core.Utilities.Results;
 using System.Text.Json;
@@ -17,7 +15,7 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
 {
     public class SearchManager : ISearchService
     {
-        private readonly ISearchRequest _hotelbedsRequest;
+        private readonly ISearchRequest  _searchRequest;
         private readonly IRedisService _redisService;
         private readonly IResponseMap _responseMap;
 
@@ -27,12 +25,12 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
                              )
         {
             _redisService = redisService;
-            _hotelbedsRequest = hotelbedsRequest;
+            _searchRequest = hotelbedsRequest;
             _responseMap = responseMapping;
         }
 
         [LogAspect]
-        [ValidationAspect(typeof(SearchRequestValidator))]
+        //[ValidationAspect(typeof(SearchRequestValidator))]
         public async Task<Result<SearchResponse>> HotelsResponse(SearchRequest request)
         {
             try
@@ -42,7 +40,7 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
 
                 if (!_redisService.Any(key))
                 {
-                    var response = await _hotelbedsRequest.SearchInHotelbeds(request);
+                    var response = await _searchRequest.SearchInHotelbeds(request);
                     searchResponse.Hotels = GetHotels(response, request);
                     //save as compressed response data
                     _redisService.Add(key, JsonSerializer.Serialize(response));
@@ -68,6 +66,10 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
 
             List<Hotel> hotelList = new List<Hotel>();
            
+            if(mappedBody.Hotels == null)
+            {
+                return null;
+            }
 
             foreach (var hotel in mappedBody.Hotels)
             {
@@ -113,7 +115,7 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
                         {
                             Rooms = roomList,
                             Policies = policies,
-                            RateKey = new RateKey { Ratekey = $"{Guid.NewGuid().ToString()}}}@{GenerateKey.CreateKey(ratekeylist, roomGroup.Count)}" }
+                            RateKey = new RateKey { Ratekey = $"{Guid.NewGuid().ToString()}}}+{GenerateKey.CreateKey(ratekeylist, roomGroup.Count)}" }
                         });
                     ratekeylist.Clear();
                 }

@@ -2,7 +2,7 @@
 using Autofac.Extras.DynamicProxy;
 using AutoMapper;
 using Castle.DynamicProxy;
-using HotelsHubApp.Business.Abstract;
+using HotelsHubApp.Business.Abstract.Hotelbeds.Services;
 using HotelsHubApp.Business.AutoMapper;
 using HotelsHubApp.Business.Concrete.Hotelbeds.Management;
 using HotelsHubApp.Business.Helper.ResponseMappping;
@@ -16,6 +16,8 @@ namespace HotelsHubApp.Business.DependencyResolvers.Autofac
         {
             builder.RegisterType<ResponseMap>().As<IResponseMap>();
             builder.RegisterType<SearchManager>().As<ISearchService>();
+            builder.RegisterType<CheckRateManager>().As<ICheckRateService>();
+
             builder.Register(context => new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<MappingProfile>();
