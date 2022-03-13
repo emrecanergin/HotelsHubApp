@@ -15,7 +15,7 @@ namespace HotelsHubApp.Core.RabbitMQClient.Concrete
             _rabbitMqService = rabbitMqService;
         }
 
-        public bool SendData(string queueName, string data)
+        public bool SendData<T>(string queueName, T data) 
         {
             try
             {

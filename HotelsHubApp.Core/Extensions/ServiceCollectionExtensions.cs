@@ -7,7 +7,7 @@ namespace HotelsHubApp.Core.Extensions
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddDependencyResolvers(
-            this IServiceCollection serviceCollection, IBaseModule[] modules)
+            this IServiceCollection serviceCollection,IBaseModule[] modules)
         {
             foreach (var module in modules)
             {

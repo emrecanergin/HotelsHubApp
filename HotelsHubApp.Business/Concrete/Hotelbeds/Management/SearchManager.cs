@@ -5,7 +5,10 @@ using HotelsHubApp.Business.BusinessModels.MainModel.messages;
 using HotelsHubApp.Business.BusinessModels.MainModel.model;
 using HotelsHubApp.Business.Helper;
 using HotelsHubApp.Business.Helper.ResponseMappping;
+using HotelsHubApp.Business.ValidationRules.FluentValidation;
 using HotelsHubApp.Core.Aspects.Autofac.Logging;
+using HotelsHubApp.Core.Aspects.Autofac.Validation;
+using HotelsHubApp.Core.RabbitMQClient.Abstract;
 using HotelsHubApp.Core.RedisClient.Abstract;
 using HotelsHubApp.Core.Utilities.Results;
 using System.Text.Json;
@@ -18,10 +21,13 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
         private readonly ISearchRequest  _searchRequest;
         private readonly IRedisService _redisService;
         private readonly IResponseMap _responseMap;
+        private readonly IPublisherService _publisherService;
+
 
         public SearchManager(ISearchRequest hotelbedsRequest,
                              IRedisService redisService,
-                             IResponseMap responseMapping
+                             IResponseMap responseMapping,
+                             IPublisherService publisherService
                              )
         {
             _redisService = redisService;
@@ -30,7 +36,7 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
         }
 
         [LogAspect]
-        //[ValidationAspect(typeof(SearchRequestValidator))]
+        [ValidationAspect(typeof(SearchRequestValidator))]
         public async Task<Result<SearchResponse>> HotelsResponse(SearchRequest request)
         {
             try
@@ -51,11 +57,12 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
                     searchResponse.Hotels = GetHotels(responseFromCache, request);
                 }
 
-                //rabbitlog
+                _publisherService.SendData<SearchResponse>("log", searchResponse);
                 return new Result<SearchResponse>(searchResponse, true);
             }
             catch (Exception ex)
             {
+                _publisherService.SendData<string>("log", ex.Message);
                 return new Result<SearchResponse>(false,ex.Message);
             }
         }

@@ -1,61 +1,27 @@
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using Core.DataAccess.Context;
-using HotelsHubApp.Business.DependencyResolvers.Autofac;
 using HotelsHubApp.Business.HttpRequests.Hotelbeds;
-using HotelsHubApp.Core.DependencyResolvers.Autofac;
 using HotelsHubApp.Core.DependencyResolvers.Microsoft;
 using HotelsHubApp.Core.Extensions;
-using HotelsHubApp.Core.RedisClient.Concrete;
 using HotelsHubApp.Core.RedisClient.Options;
 using HotelsHubApp.Core.Utilities.IoC;
+using HotelsHubApp.WebAPI.Extensions;
 using HotelsHubApp.WebAPI.Middleware;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using Serilog;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+//builder extension
+BuilderExtensionClass.BuilderExtension(builder);
 
-builder.Host
-.UseSerilog((ctx, lc) =>
-{
-    lc.WriteTo.Console();
-})
-.UseServiceProviderFactory(new AutofacServiceProviderFactory())
-.ConfigureContainer<ContainerBuilder>(builder1 =>
-{
-    builder1.RegisterModule(new AutofacCoreModule());
-    builder1.RegisterModule(new AutofacBusinessModule());
-});
 
 //Add services to the container.
-builder.Services.AddControllers().AddNewtonsoftJson(options =>
-{
-    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-    //request is coming null when its include
-    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-});
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowReadingFromString |
-                                                   JsonNumberHandling.WriteAsString;
-});
-
-builder.Services.AddScoped<RedisServer>();
 builder.Services.Configure<RedisOptions>(builder.Configuration.GetSection("RedisOptions"));
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddHealthChecks();
 builder.Services.AddDependencyResolvers(new IBaseModule[] { new CoreModule() });
 builder.Services.AddHttpClient<HotelbedsService>();
 builder.Services.AddDbContext<HotelbedsDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration["ConnectionStrings:ConnectionString"]);
 });
-
-
+builder.Services.AddMongoDbSettings(builder.Configuration);
 
 var app = builder.Build();
 

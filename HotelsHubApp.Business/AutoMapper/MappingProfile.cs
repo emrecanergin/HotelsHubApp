@@ -20,7 +20,7 @@ namespace HotelsHubApp.Business.AutoMapper
             CreateMap<CheckRateRS, CheckResponse>();
 
             //example
-            CreateMap<CreditCard, PaymentCard>().ForMember(a => a.cardType, b => b.MapFrom(c => c.CardType));
+            //CreateMap<CreditCard, PaymentCard>().ForMember(a => a.cardType, b => b.MapFrom(c => c.CardType));
             
             CreateMap<PaymentCard, CreditCard>();
 

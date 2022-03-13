@@ -40,7 +40,7 @@ namespace HotelsHubApp.WebAPI.Middleware
                 }
 
                 var result = JsonSerializer.Serialize(new ApiResponse<object>{  ErrorMessage = error?.Message });
-                _publisherService.SendData("errorLog", result);
+                _publisherService.SendData<string>("errorLog", result);
                 await response.WriteAsync(result);
             }
         }

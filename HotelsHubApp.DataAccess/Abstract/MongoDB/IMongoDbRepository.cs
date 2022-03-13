@@ -6,7 +6,6 @@ namespace HotelsHubApp.DataAccess.Abstract.MongoDB
 {
     public interface IMongoDbRepository<TEntity> where TEntity : MongoDbEntity
     {
-        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate = null);
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> GetByIdAsync(string id);
         Task<TEntity> AddAsync(TEntity entity);
@@ -14,7 +13,6 @@ namespace HotelsHubApp.DataAccess.Abstract.MongoDB
         Task<TEntity> UpdateAsync(string id, TEntity entity);
         Task<TEntity> UpdateAsync(TEntity entity, Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> DeleteAsync(TEntity entity);
-        Task DeleteAsync(string id);
         Task<TEntity> DeleteAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }

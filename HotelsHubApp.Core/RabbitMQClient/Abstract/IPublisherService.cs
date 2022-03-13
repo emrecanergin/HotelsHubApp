@@ -2,6 +2,6 @@
 {
     public interface IPublisherService
     {
-        bool SendData(string queueName, string data);
+        bool SendData<T>(string queueName, T data);
     }
 }

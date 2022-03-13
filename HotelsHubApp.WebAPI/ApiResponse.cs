@@ -13,13 +13,14 @@ namespace HotelsHubApp.WebAPI
         {
             this.Success = true;
             this.Data = extra;
-            this.TimeStamps = DateTime.Now;
+            this.TimeStamps = DateTime.UtcNow;
         }
 
         public ApiResponse(string errorMessage)
         {
             this.Success = false;
             this.ErrorMessage = errorMessage;
+            this.TimeStamps = DateTime.UtcNow;  
         }
         public T Data { get; set; }
 

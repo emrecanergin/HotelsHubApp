@@ -2,6 +2,7 @@
 using HotelsHubApp.Business.BusinessModels.MainModel.messages;
 using HotelsHubApp.WebAPI;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace WebAPI.Controllers
 {
@@ -12,8 +13,10 @@ namespace WebAPI.Controllers
         private readonly ISearchService _searchService;
         private readonly ICheckRateService _checkRateService;
 
-
-        public MainController(ISearchService searchService, ICheckRateService checkRateService)
+       
+        public MainController(ISearchService searchService,
+            ICheckRateService checkRateService,
+            ILogger<MainController> logger)
         {
             _searchService = searchService;
             _checkRateService = checkRateService;
