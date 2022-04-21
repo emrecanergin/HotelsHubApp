@@ -1,6 +1,5 @@
 ﻿using HotelsHubApp.Business.BusinessModels.MainModel.bookingModel;
 
-
 namespace HotelsHubApp.Business.BusinessModels.MainModel.model
 {
     public class BookingRequestRoom

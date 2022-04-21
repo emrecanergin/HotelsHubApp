@@ -28,6 +28,7 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
                 
                 var res = new CheckResponse();
                 res.Currency = response.hotel.currency;
+                res.hotel = response.hotel;
                 //_mapper.Map(response, res);
                 return new Result<CheckResponse>(res, true);
 

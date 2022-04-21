@@ -1,4 +1,5 @@
-﻿using HotelsHubApp.Business.Abstract.Hotelbeds.Requests;
+﻿using AutoMapper;
+using HotelsHubApp.Business.Abstract.Hotelbeds.Requests;
 using HotelsHubApp.Business.Abstract.Hotelbeds.Services;
 using HotelsHubApp.Business.BusinessModels.HotelbedsModel.messages;
 using HotelsHubApp.Business.BusinessModels.MainModel.messages;
@@ -22,17 +23,21 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
         private readonly IRedisService _redisService;
         private readonly IResponseMap _responseMap;
         private readonly IPublisherService _publisherService;
+        private readonly IMapper _mapper;
+
 
 
         public SearchManager(ISearchRequest hotelbedsRequest,
                              IRedisService redisService,
                              IResponseMap responseMapping,
-                             IPublisherService publisherService
+                             IPublisherService publisherService,
+                             IMapper mapper
                              )
         {
             _redisService = redisService;
             _searchRequest = hotelbedsRequest;
             _responseMap = responseMapping;
+            _mapper = mapper;
         }
 
         [LogAspect]
@@ -57,12 +62,12 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
                     searchResponse.Hotels = GetHotels(responseFromCache, request);
                 }
 
-                _publisherService.SendData<SearchResponse>("log", searchResponse);
+                //_publisherService.SendData<SearchResponse>("log", searchResponse);
                 return new Result<SearchResponse>(searchResponse, true);
             }
             catch (Exception ex)
             {
-                _publisherService.SendData<string>("log", ex.Message);
+                //_publisherService.SendData<string>("log", ex.Message);
                 return new Result<SearchResponse>(false,ex.Message);
             }
         }

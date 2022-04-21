@@ -4,16 +4,20 @@ using HotelsHubApp.Business.BusinessModels.HotelbedsModel.messages;
 using HotelsHubApp.Business.BusinessModels.HotelbedsModel.model;
 using HotelsHubApp.Business.BusinessModels.MainModel.messages;
 using HotelsHubApp.Business.HttpRequests.Hotelbeds;
+using HotelsHubApp.Core.RabbitMQClient.Abstract;
 
 namespace HotelsHubApp.Business.Concrete.Hotelbeds.Requests
 {
     public class HotelbedsSearchRequest : ISearchRequest
     {
         private readonly HotelbedsService _hotelbedsService;
+        private readonly IPublisherService _publisherService;
 
-        public HotelbedsSearchRequest(HotelbedsService hotelbedsService)
+        public HotelbedsSearchRequest(HotelbedsService hotelbedsService,
+                                      IPublisherService publisherService)
         {
             _hotelbedsService = hotelbedsService;
+            _publisherService = publisherService;
         }  
         
         public AvailabilityRQ CreateHotelbedsRequestBody(SearchRequest request)
@@ -48,14 +52,13 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Requests
 
             var destinationCode = request.Settings.DestinationCode;
             var stay = new Stay { checkIn = request.CheckIn, checkOut = request.CheckOut };
-            var codes = new HotelsFilter { hotel = request.Settings.HotelCodes };
+            var codes = new HotelsFilter { hotel = request.Settings.HotelCodes };           
             var total = new AvailabilityRQ
             {
                 stay = stay,
                 occupancies = occupancies,
                 hotels = (request.Settings.HotelCodes != null) ? codes : null,
-                destination = (destinationCode != null) ? new Destination { code = destinationCode.Code } : null,
-             
+                destination = (destinationCode != null) ? new Destination { code = destinationCode.Code } : null,           
             };
             return total;
         }
@@ -66,7 +69,7 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Requests
             try
             {
                 var response = await _hotelbedsService.GetAvailableHotels(requestBody);
-                //rabbitLog
+                _publisherService.SendData<AvailabilityRS>("responseLog",response);
                 return response;
             }
             catch (Exception ex)

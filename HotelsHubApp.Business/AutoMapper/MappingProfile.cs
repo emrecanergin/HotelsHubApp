@@ -4,6 +4,7 @@ using HotelsHubApp.Business.BusinessModels.HotelbedsModel.model;
 using HotelsHubApp.Business.BusinessModels.MainModel.messages;
 using HotelsHubApp.Business.BusinessModels.MainModel.model;
 using HotelsHubApp.Business.Helper.ResponseMappping.Models;
+using Rate = HotelsHubApp.Business.BusinessModels.HotelbedsModel.model.Rate;
 
 namespace HotelsHubApp.Business.AutoMapper
 {
@@ -22,8 +23,7 @@ namespace HotelsHubApp.Business.AutoMapper
             //example
             //CreateMap<CreditCard, PaymentCard>().ForMember(a => a.cardType, b => b.MapFrom(c => c.CardType));
             
-            CreateMap<PaymentCard, CreditCard>();
-
+            CreateMap<PaymentCard, CreditCard>();           
         }
     }
 }

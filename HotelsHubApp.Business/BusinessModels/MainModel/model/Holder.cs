@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HotelsHubApp.Business.BusinessModels.MainModel.model
+﻿namespace HotelsHubApp.Business.BusinessModels.MainModel.model
 {
     public class Holder
     {
-        public string name { get; set; }
-        public string surname { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
     }
 }

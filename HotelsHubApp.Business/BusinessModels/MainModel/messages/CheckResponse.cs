@@ -1,11 +1,12 @@
 ﻿using HotelsHubApp.Business.BusinessModels.MainModel.model;
+using Hotel = HotelsHubApp.Business.BusinessModels.HotelbedsModel.model.Hotel;
 
 namespace HotelsHubApp.Business.BusinessModels.MainModel.messages
 {
     public class CheckResponse 
     {
-        public HotelCR hotel { get; set; }
-        public IList<RoomCR> rooms { get; set; }
+        public Hotel hotel { get; set; }
+        public IList<RoomCRS> rooms { get; set; }
         public string ValuationId { get; set; }
         public decimal Price { get; set; }
         public double MinimumSellingPrice { get; set; }

@@ -1,15 +1,13 @@
-﻿
-
-namespace HotelsHubApp.Business.BusinessModels.MainModel.model
+﻿namespace HotelsHubApp.Business.BusinessModels.MainModel.model
 {
     public class BookingPax
     {
-        public int roomId { get; set; }
-        public string type { get; set; }
-        public string name { get; set; }
-        public string surname { get; set; }
-        public int age { get; set; }
-        public string gender { get; set; }
-        public string country { get; set; }
+        public int RoomId { get; set; }
+        public string Type { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public int Age { get; set; }
+        public string Gender { get; set; }
+        public string Country { get; set; }
     }
 }
