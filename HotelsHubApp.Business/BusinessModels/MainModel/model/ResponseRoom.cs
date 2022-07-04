@@ -1,6 +1,6 @@
 ﻿namespace HotelsHubApp.Business.BusinessModels.MainModel.model
 {
-    public class Rooms
+    public class ResponseRoom
     {
         public string RoomName { get; set; }
         public string BoardMainName { get; set; }

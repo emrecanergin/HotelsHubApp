@@ -10,6 +10,6 @@
         public DestinationCode? DestinationCode { get; set; }
         public IList<int>? HotelCodes { get; set; }
         public object? Markets { get; set; }
-        public IList<Room>? Rooms { get; set; }
+        public IList<RequestRoom>? Rooms { get; set; }
     }
 }

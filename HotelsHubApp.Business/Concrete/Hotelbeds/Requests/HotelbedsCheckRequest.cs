@@ -8,11 +8,11 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Requests
 {
     public class HotelbedsCheckRequest : ICheckRateRequest
     {
-        private readonly HotelbedsService _hotelbedsService;
+        private readonly HotelApiConsumer _hotelApiConsumer;
 
-        public HotelbedsCheckRequest(HotelbedsService hotelbedsService)
+        public HotelbedsCheckRequest(HotelApiConsumer hotelApiConsumer)
         {
-            _hotelbedsService = hotelbedsService;
+            hotelApiConsumer = _hotelApiConsumer;
         }
         public async Task<CheckRateRS> CheckRate(CheckRequest checkRequest)
         {
@@ -30,7 +30,7 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Requests
 
             var request = new CheckRateRQ { rooms = roomList };
 
-            var response = await _hotelbedsService.CheckRate(request);
+            var response = await _hotelApiConsumer.CheckRate(request);
             return response;
         }
     }

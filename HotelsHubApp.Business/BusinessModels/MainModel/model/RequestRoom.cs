@@ -2,7 +2,7 @@
 
 namespace HotelsHubApp.Business.BusinessModels.MainModel.model
 {
-    public class Room
+    public class RequestRoom
     {
         public int RoomIndex { get; set; }
         public IList<Pax>? Paxes { get; set; }

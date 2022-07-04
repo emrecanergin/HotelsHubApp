@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HotelsHubApp.Business.BusinessModels.MainModel.messages;
+using HotelsHubApp.Core.Utilities.Results;
 
 namespace HotelsHubApp.Business.Abstract.Hotelbeds.Services
 {
     public interface IBookingService
     {
+        public Task<Result<BookingResponse>> Book(BookingRequest request);
     }
 }

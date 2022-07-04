@@ -10,13 +10,13 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Requests
 {
     public class HotelbedsSearchRequest : ISearchRequest
     {
-        private readonly HotelbedsService _hotelbedsService;
+        private readonly HotelApiConsumer _hotelApiConsumer;
         private readonly IPublisherService _publisherService;
 
-        public HotelbedsSearchRequest(HotelbedsService hotelbedsService,
+        public HotelbedsSearchRequest(HotelApiConsumer hotelApiConsumer,
                                       IPublisherService publisherService)
         {
-            _hotelbedsService = hotelbedsService;
+            hotelApiConsumer = _hotelApiConsumer;
             _publisherService = publisherService;
         }  
         
@@ -68,7 +68,7 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Requests
             var requestBody = CreateHotelbedsRequestBody(request);
             try
             {
-                var response = await _hotelbedsService.GetAvailableHotels(requestBody);
+                var response = await _hotelApiConsumer.GetAvailableHotels(requestBody);
                 _publisherService.SendData<AvailabilityRS>("responseLog",response);
                 return response;
             }

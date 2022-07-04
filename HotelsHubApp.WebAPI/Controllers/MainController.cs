@@ -12,14 +12,17 @@ namespace WebAPI.Controllers
     {
         private readonly ISearchService _searchService;
         private readonly ICheckRateService _checkRateService;
+        private readonly IBookingService _bookingService;
 
-       
+
+
         public MainController(ISearchService searchService,
-            ICheckRateService checkRateService,
-            ILogger<MainController> logger)
+                              ICheckRateService checkRateService,
+                              IBookingService bookingService)                                  
         {
             _searchService = searchService;
             _checkRateService = checkRateService;
+            _bookingService = bookingService;
         }
 
         [HttpPost]
@@ -49,7 +52,14 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Book(BookingRequest request)
         {
-            return Ok();
+            var response = await _bookingService.Book(request);
+            if (response.Success)
+            {
+                return Ok(new ApiResponse<BookingResponse>(response.Data));
+            }
+            return Ok(response);
+            
+
         }
 
     }

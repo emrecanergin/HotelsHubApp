@@ -91,8 +91,7 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
                 foreach (var roomGroup in hotel.roomGroups)
                 {
                     List<Policy> policies = new();
-                    List<Rooms> roomList = new();
-                    //List<string> ratekeylist = new();
+                    List<ResponseRoom> roomList = new();
 
                     foreach (var (item1, index) in roomGroup[0].rate.cancellationPolicies.Select((v, i) => (v, i)))
                     {
@@ -110,17 +109,9 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
                     foreach (var room in roomGroup)
                     {
                         ratekeylist.Add(room.rate.rateKey);
-                        roomList.Add(new Rooms
-                        {
-                            BoardMainCode = room.rate.boardCode,
-                            BoardMainName = room.rate.boardName,
-                            RoomCode = Guid.NewGuid().ToString(),
-                            Price = room.rate.net,
-                            RoomIndex = room.rate.rooms,
-                            Currency = hotel.hotelFeatures.currency,
-                            RoomName = room.roomname.ToString(),
-                            PaymentType = room.rate.paymentType,
-                        });
+                        var data = _mapper.Map<ResponseRoom>(room);
+                        data.Currency = hotel.hotelFeatures.currency;   
+                        roomList.Add(data);
                     }
                     roomGroupList.Add(
                         new RoomGroup

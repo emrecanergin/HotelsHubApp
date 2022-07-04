@@ -8,11 +8,11 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Requests
 {
     public class HotelbedsBookingRequest : IBookingRequest
     {
-        private readonly HotelbedsService _hotelbedsService;
+        private readonly HotelApiConsumer _hotelApiConsumer;
         private readonly IMapper _mapper;
-        public HotelbedsBookingRequest(HotelbedsService hotelbedsService,IMapper mapper)
+        public HotelbedsBookingRequest(HotelApiConsumer hotelApiConsumer, IMapper mapper)
         {
-            _hotelbedsService = hotelbedsService;   
+            _hotelApiConsumer = hotelApiConsumer;   
             _mapper = mapper;   
         }
 
@@ -24,7 +24,7 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Requests
             request.clientReference = bookingRequest.clientReference;   
             request.remark = bookingRequest.remark; 
      
-            var response = await _hotelbedsService.Book(request);    
+            var response = await _hotelApiConsumer.Book(request);    
             
             return response;
         }

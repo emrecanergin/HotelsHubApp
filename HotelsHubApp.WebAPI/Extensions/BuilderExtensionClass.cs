@@ -3,6 +3,7 @@ using Autofac.Extensions.DependencyInjection;
 using Core.DataAccess.Context;
 using HotelsHubApp.Business.DependencyResolvers.Autofac;
 using HotelsHubApp.Business.HttpRequests.Hotelbeds;
+using HotelsHubApp.Business.HttpRequests.HotelbedsClient;
 using HotelsHubApp.Core.DependencyResolvers.Autofac;
 using HotelsHubApp.Core.DependencyResolvers.Microsoft;
 using HotelsHubApp.Core.Extensions;
@@ -43,7 +44,12 @@ namespace HotelsHubApp.WebAPI.Extensions
                 options.UseSqlServer(builder.Configuration["ConnectionStrings:ConnectionString"]);
             });
             builder.Services.AddMongoDbSettings(builder.Configuration);
-            
+
+            builder.Services.AddHttpClient<HotelApiConsumer>();
+            builder.Services.AddHttpClient<CacheApiConsumer>();
+            builder.Services.AddHttpClient<HotelContentApiConsumer>();
+
+
             return builder;
         }
     }
