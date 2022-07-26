@@ -3,7 +3,7 @@ using HotelsHubApp.Business.BusinessModels.MainModel.messages;
 
 namespace HotelsHubApp.Business.Abstract.Hotelbeds.Requests
 {
-    public interface IBookingRequest
+    internal interface IBookingRequest
     {
         public Task<BookingRS> Book(BookingRequest bookingRequest);
     }
