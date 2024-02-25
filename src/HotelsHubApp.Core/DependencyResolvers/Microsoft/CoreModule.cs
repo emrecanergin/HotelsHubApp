@@ -28,7 +28,7 @@ namespace HotelsHubApp.Core.DependencyResolvers.Microsoft
                 c.BaseAddress = new Uri("https://api.test.hotelbeds.com/");
                 c.DefaultRequestHeaders.Add("Accept", "application/json");
                 c.DefaultRequestHeaders.Add("Accept-Encoding", "*");
-                c.DefaultRequestHeaders.Add("Api-key", "*");
+                c.DefaultRequestHeaders.Add("Api-key", "b4036e737662995f3452af42bc59e114");
                 c.DefaultRequestHeaders.Add("X-Signature", Signature.CreateSignature());
             });
         }
