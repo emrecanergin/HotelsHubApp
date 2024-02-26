@@ -10,7 +10,7 @@ namespace HotelsHubApp.Core.RabbitMQClient.Concrete
         {
             var factory = new ConnectionFactory()
             {
-                Uri = new Uri("amqps://bjqbnuye:n9x2pOag6o02NNWVu0evb3krFnrqGnFx@cow.rmq2.cloudamqp.com/bjqbnuye"),
+                Uri = new Uri("amqps://owrlcjfq:58iV5Fwb0v0nUb8ec2Q52N_ob7EkwYhf@cow.rmq2.cloudamqp.com/owrlcjfq"),
             };
 
             return factory.CreateConnection();          

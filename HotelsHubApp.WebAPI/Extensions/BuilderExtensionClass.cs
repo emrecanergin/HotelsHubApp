@@ -5,8 +5,12 @@ using HotelsHubApp.Business.DependencyResolvers.Autofac;
 using HotelsHubApp.Core.DependencyResolvers.Autofac;
 using HotelsHubApp.Core.DependencyResolvers.Microsoft;
 using HotelsHubApp.Core.Extensions;
+using HotelsHubApp.Core.RabbitMQClient.Abstract;
+using HotelsHubApp.Core.RabbitMQClient.Concrete;
 using HotelsHubApp.Core.RedisClient.Options;
 using HotelsHubApp.Core.Utilities.IoC;
+using HotelsHubApp.DataAccess.Abstract;
+using HotelsHubApp.DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Serilog;
@@ -27,6 +31,9 @@ namespace HotelsHubApp.WebAPI.Extensions
             {
                 options.UseSqlServer(builder.Configuration["ConnectionStrings:ConnectionString"]);
             });
+            builder.Services.AddScoped<ISearchRepository, SearchRepository>();
+            builder.Services.AddScoped<IPublisherService, PublisherService>();
+
 
             builder.Services.AddControllers().AddNewtonsoftJson(options =>
             {

@@ -12,16 +12,16 @@ namespace HotelsHubApp.WebAPI
         }
         public ApiResponse(T extra)
         {
-            this.Success = true;
-            this.Data = extra;
-            this.TimeStamps = DateTime.UtcNow;
+            Success = true;
+            Data = extra;
+            TimeStamps = DateTime.UtcNow;
         }
 
         public ApiResponse(string errorMessage)
         {
-            this.Success = false;
-            this.ErrorMessage = errorMessage;
-            this.TimeStamps = DateTime.UtcNow;  
+            Success = false;
+            ErrorMessage = errorMessage;
+            TimeStamps = DateTime.UtcNow;  
         }
 
         public int StatusCode { get; set; }

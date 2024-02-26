@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HotelsHubApp.Core\HotelsHubApp.Core.csproj" />
+    <ProjectReference Include="..\HotelsHubApp.DataAccess\HotelsHubApp.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

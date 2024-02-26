@@ -14,7 +14,10 @@ namespace HotelsHubApp.Core.RedisClient.Concrete
         {
             _redisServer.Database(0).StringSet(key, value);
         }
-
+        public void Add(string key, string value,TimeSpan expireTime)
+        {
+            _redisServer.Database(0).StringSet(key, value, expireTime);
+        }
         public bool Any(string key)
         {
             return _redisServer.Database(0).KeyExists(key);

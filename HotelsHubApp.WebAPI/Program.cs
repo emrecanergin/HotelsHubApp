@@ -1,5 +1,6 @@
 using Autofac.Core;
 using HotelsHubApp.Business.Concrete.Hotelbeds.Helper.Searching;
+using HotelsHubApp.Core.RabbitMQClient.Abstract;
 using HotelsHubApp.Core.RabbitMQClient.Concrete;
 using HotelsHubApp.WebAPI.Extensions;
 using HotelsHubApp.WebAPI.Middleware;
@@ -11,6 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 BuilderExtensionClass.BuilderExtension(builder);
 //builder.Configuration.GetSection("RabbitMqConnection").Bind(connectionFactory);
 builder.Services.AddScoped<IGetHotels, GetHotels>();
+//builder.Services.AddScoped<IRabbitMqService, RabbitMqService>();
+builder.Services.AddHttpLogging((opt) =>
+{
+    opt.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.All;
+});
 
 
 

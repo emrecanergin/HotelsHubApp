@@ -11,8 +11,6 @@ namespace HotelsHubApp.DataAccess.Concrete.EntityFramework
         public SearchRepository(HotelbedsDBContext context) : base(context)
         {
 
-        }
-       
-        
+        }    
     }
 }

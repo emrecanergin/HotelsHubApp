@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelsHubApp.DataAccess", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelsHubApp.Entities", "HotelsHubApp.Entities\HotelsHubApp.Entities.csproj", "{8D71B432-5C04-4C5A-9BC3-9BBB25D320D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelsHubApp.LoggingWorkerService", "HotelsHubApp.LoggingWorkerService\HotelsHubApp.LoggingWorkerService.csproj", "{506F7880-51DF-4559-9A13-3B52BBAB688E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{8D71B432-5C04-4C5A-9BC3-9BBB25D320D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D71B432-5C04-4C5A-9BC3-9BBB25D320D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D71B432-5C04-4C5A-9BC3-9BBB25D320D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{506F7880-51DF-4559-9A13-3B52BBAB688E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{506F7880-51DF-4559-9A13-3B52BBAB688E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{506F7880-51DF-4559-9A13-3B52BBAB688E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{506F7880-51DF-4559-9A13-3B52BBAB688E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +57,7 @@ Global
 		{009C4564-4EAE-4462-9989-1F1770C1F6B3} = {A5592B11-9E85-40B4-8388-B37F2C60DC16}
 		{E533ACBA-5212-4C33-82E8-AF8D5BF0EDA0} = {A5592B11-9E85-40B4-8388-B37F2C60DC16}
 		{8D71B432-5C04-4C5A-9BC3-9BBB25D320D1} = {A5592B11-9E85-40B4-8388-B37F2C60DC16}
+		{506F7880-51DF-4559-9A13-3B52BBAB688E} = {A5592B11-9E85-40B4-8388-B37F2C60DC16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {762A0636-F3FA-41B9-8AE2-81329238244A}

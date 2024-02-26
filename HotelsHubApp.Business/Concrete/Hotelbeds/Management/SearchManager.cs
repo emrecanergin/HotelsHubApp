@@ -10,6 +10,9 @@ using HotelsHubApp.Core.Aspects.Autofac.Validation;
 using HotelsHubApp.Core.RabbitMQClient.Abstract;
 using HotelsHubApp.Core.RedisClient.Abstract;
 using HotelsHubApp.Core.Utilities.Results;
+using HotelsHubApp.DataAccess.Abstract;
+using HotelsHubApp.Entities.EFCoreEntities;
+using Serilog;
 using System.Text.Json;
 
 
@@ -21,16 +24,20 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
         private readonly IRedisService _redisService;
         private readonly IPublisherService _publisherService;
         private readonly IGetHotels _getHotels;
+        private readonly ISearchRepository _searchRepository;
+
 
         public SearchManager(ISearchRequest hotelbedsRequest,
                              IRedisService redisService,                           
                              IPublisherService publisherService,
-                             IGetHotels getHotels
-                             )
+                             IGetHotels getHotels,
+                             ISearchRepository searchRepository)
         {
             _redisService = redisService;
             _searchRequest = hotelbedsRequest;
+            _publisherService = publisherService;
             _getHotels = getHotels; 
+            _searchRepository = searchRepository;
         }
 
         [LogAspect]
@@ -45,15 +52,15 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Management
                 var response = await _searchRequest.SearchInHotelbeds(request);
                 searchResponse.Hotels = _getHotels.Get(response, request);
                 //save as compressed response data
-                _redisService.Add(key, JsonSerializer.Serialize(response));
+                _redisService.Add(key, JsonSerializer.Serialize(response),TimeSpan.FromMinutes(10));
             }
             else
             {
                 var responseFromCache = _redisService.GetJsonData<AvailabilityRS>(key);
                 searchResponse.Hotels = _getHotels.Get(responseFromCache, request);
             }
-
-            //_publisherService.SendData<SearchResponse>("log", searchResponse);
+            _publisherService.SendData("responseLog", searchResponse);
+         
             return new Result<SearchResponse>(searchResponse, "response created");
         }
     }
