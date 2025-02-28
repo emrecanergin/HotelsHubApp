@@ -24,7 +24,7 @@ namespace HotelsHubApp.LoggingWorkerService.RabbitMq
             {
                 var body = ea.Body;
                 var message = Encoding.UTF8.GetString(body.ToArray());
-                _logger.Log(logLevel, message,$"{}");
+                _logger.Log(logLevel, message,$"{message}");
             };
 
             channel.BasicConsume(queueName, true, consumer);
