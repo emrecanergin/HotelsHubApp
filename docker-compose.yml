@@ -1,0 +1,82 @@
+
+services:
+  redis:
+    image: redis:alpine
+    ports:
+      - '6379:6379'
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    
+  mongodb:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_DATABASE: Logs
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - '1434:1433'
+    environment:
+      SA_PASSWORD: 'YourPassword123!'
+      ACCEPT_EULA: 'Y'
+    volumes:
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P YourPassword123! -C -Q 'SELECT 1'"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  webapi:
+    build: 
+      context: .
+      dockerfile: HotelsHubApp.WebAPI/Dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      redis:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      sqlserver:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Hotelbeds__ApiKey=${HOTELBEDS_API_KEY:-your_api_key_here}
+      - Hotelbeds__SecretKey=${HOTELBEDS_SECRET_KEY:-your_secret_key_here}
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: .
+      dockerfile: HotelsHubApp.LoggingWorkerService/Dockerfile
+    depends_on:
+      - rabbitmq
+      - mongodb
+    restart: unless-stopped 

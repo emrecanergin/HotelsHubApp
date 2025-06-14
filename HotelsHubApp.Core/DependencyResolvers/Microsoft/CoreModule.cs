@@ -4,6 +4,7 @@ using HotelsHubApp.Core.RedisClient.Abstract;
 using HotelsHubApp.Core.RedisClient.Concrete;
 using HotelsHubApp.Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using HotelsHubApp.Core.Utilities.HttpRequest;
 using HotelsHubApp.Business.HttpRequests.Helper;
 
@@ -23,12 +24,13 @@ namespace HotelsHubApp.Core.DependencyResolvers.Microsoft
 
             //httprequest
             serviceCollection.AddScoped(typeof(IHttpRequestService<>), typeof(HttpRequestService<>));
-            serviceCollection.AddHttpClient("HotelbedsRequest", c =>
+            serviceCollection.AddHttpClient("HotelbedsRequest", (serviceProvider, c) =>
             {
+                var configuration = serviceProvider.GetRequiredService<IConfiguration>();
                 c.BaseAddress = new Uri("https://api.test.hotelbeds.com/");
                 c.DefaultRequestHeaders.Add("Accept", "application/json");
                 c.DefaultRequestHeaders.Add("Accept-Encoding", "*");
-                c.DefaultRequestHeaders.Add("Api-key", "b4036e737662995f3452af42bc59e114");
+                c.DefaultRequestHeaders.Add("Api-key", configuration["Hotelbeds:ApiKey"] ?? "your_api_key_here");
                 c.DefaultRequestHeaders.Add("X-Signature", Signature.CreateSignature());
             });
         }

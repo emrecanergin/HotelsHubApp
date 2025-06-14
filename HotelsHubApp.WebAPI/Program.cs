@@ -6,6 +6,7 @@ using HotelsHubApp.WebAPI.Extensions;
 using HotelsHubApp.WebAPI.Middleware;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,11 @@ builder.Services.AddHttpLogging((opt) =>
 });
 
 
+
+builder.Host.UseSerilog((context,config) =>
+{
+    config.ReadFrom.Configuration(context.Configuration);
+});
 
 
 var app = builder.Build();
