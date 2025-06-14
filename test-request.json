@@ -1,0 +1,22 @@
+{
+  "CheckIn": "2024-12-20T00:00:00",
+  "CheckOut": "2024-12-22T00:00:00",
+  "Settings": {
+    "Rooms": [
+      {
+        "RoomIndex": 1,
+        "Paxes": [
+          {
+            "PaxAge": 30
+          },
+          {
+            "PaxAge": 28
+          }
+        ]
+      }
+    ]
+  },
+  "Destination": {
+    "Code": "PMI"
+  }
+} 

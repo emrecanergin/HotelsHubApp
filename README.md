@@ -5,7 +5,7 @@
 - .NET 6.0 SDK
 - Docker & Docker Compose
 
-## Quick Start
+## 🚀 Quick Start
 
 1. **Clone the repository**
 ```bash
@@ -13,9 +13,16 @@ git clone https://github.com/yourusername/HotelsHubApp.git
 cd HotelsHubApp
 ```
 
-2. **Start everything with Docker (recommended)**
+2. **Run with your Hotelbeds API credentials**
+
+### Windows (PowerShell) - Recommended
+```powershell
+.\run.ps1 -ApiKey "your_api_key" -SecretKey "your_secret_key"
+```
+
+### Linux/Mac (Bash)
 ```bash
-docker-compose up --build
+HOTELBEDS_API_KEY="your_api_key" HOTELBEDS_SECRET_KEY="your_secret_key" docker-compose up --build
 ```
 
 **That's it! 🚀 Everything runs automatically:**
@@ -51,25 +58,8 @@ dotnet run --project HotelsHubApp.LoggingWorkerService
 - **RabbitMQ**: localhost:5672
 - **SQL Server**: localhost:1433 (sa/YourPassword123!)
 
-## 🔐 Security Configuration
+## 🔐 API Credentials
 
-**IMPORTANT:** Before running the project, you must configure your Hotelbeds API credentials:
+You need valid Hotelbeds API credentials to run this project. Get them from [Hotelbeds API](https://developer.hotelbeds.com/).
 
-### Method 1: Environment Variables (Recommended)
-```bash
-export HOTELBEDS_API_KEY="your_actual_api_key"
-export HOTELBEDS_SECRET_KEY="your_actual_secret_key"
-docker-compose up --build
-```
-
-### Method 2: Update appsettings.json
-```json
-{
-  "Hotelbeds": {
-    "ApiKey": "your_actual_api_key",
-    "SecretKey": "your_actual_secret_key"
-  }
-}
-```
-
-**⚠️ NEVER commit real API keys to Git!** 
+**⚠️ NEVER commit API keys to Git!** The run.ps1 script handles credentials securely. 

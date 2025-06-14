@@ -3,7 +3,7 @@ using HotelsHubApp.Core.RabbitMQClient.Abstract;
 using HotelsHubApp.Core.RabbitMQClient.Concrete;
 using HotelsHubApp.LoggingWorkerService;
 using HotelsHubApp.LoggingWorkerService.RabbitMq;
-using Microsoft.AspNetCore.Builder;
+
 using Serilog;
 
 var builder = Host.CreateApplicationBuilder(args);
