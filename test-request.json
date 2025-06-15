@@ -1,22 +1,42 @@
 {
-  "CheckIn": "2024-12-20T00:00:00",
-  "CheckOut": "2024-12-22T00:00:00",
+  "CheckIn": "2025-06-20T00:00:00",
+  "CheckOut": "2025-06-22T00:00:00",
   "Settings": {
     "Rooms": [
-      {
-        "RoomIndex": 1,
-        "Paxes": [
-          {
-            "PaxAge": 30
-          },
-          {
-            "PaxAge": 28
-          }
-        ]
-      }
-    ]
+        {
+          "RoomIndex": 1,
+          "Paxes": [
+            {
+              "PaxOrder": 1,
+              "PaxAge": 30
+            }
+          ]
+        },
+        {
+          "RoomIndex": 1,
+          "Paxes": [
+            {
+              "PaxOrder": 1,
+              "PaxAge": 30
+            }
+          ]
+        }
+      ],
+    "DestinationCode": {
+      "Code": "PMI"
+    },
+    "HotelCodes": [ 77,
+    168,
+    264,
+    297,
+    311,
+    3424]
   },
-  "Destination": {
-    "Code": "PMI"
+  "Info": {
+    "HotelCode": true,
+    "HotelName": true,
+    "HotelCategory": true,
+    "HotelGeoLocation": true,
+    "HotelCityName": true
   }
 } 

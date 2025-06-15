@@ -37,15 +37,19 @@ namespace HotelsHubApp.Business.Concrete.Hotelbeds.Requests.RequestGenerators
                 paxlist.Clear();
             }
 
-            var destinationCode = request.Settings.DestinationCode;
             var stay = new Stay { checkIn = request.CheckIn, checkOut = request.CheckOut };
-            var codes = new HotelsFilter { hotel = request.Settings.HotelCodes };
+            
+            // Priority logic: HotelCodes > DestinationCode
+            var hasHotelCodes = request.Settings.HotelCodes != null && request.Settings.HotelCodes.Any();
+            var hasDestinationCode = request.Settings.DestinationCode != null && !string.IsNullOrEmpty(request.Settings.DestinationCode.Code);
+            
             var total = new AvailabilityRQ
             {
                 stay = stay,
                 occupancies = occupancies,
-                hotels = (request.Settings.HotelCodes != null) ? codes : null,
-                destination = (destinationCode != null) ? new Destination { code = destinationCode.Code } : null,
+                // İkisi de dolu ise HotelCodes öncelikli, sadece biri dolu ise onu kullan
+                hotels = hasHotelCodes ? new HotelsFilter { hotel = request.Settings.HotelCodes } : null,
+                destination = (hasHotelCodes == false && hasDestinationCode) ? new Destination { code = request.Settings.DestinationCode.Code } : null,
             };
             return total;
         }

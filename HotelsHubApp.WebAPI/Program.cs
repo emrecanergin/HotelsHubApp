@@ -10,10 +10,28 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// CORS Policy Ekleniyor
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 BuilderExtensionClass.BuilderExtension(builder);
-//builder.Configuration.GetSection("RabbitMqConnection").Bind(connectionFactory);
 builder.Services.AddScoped<IGetHotels, GetHotels>();
-//builder.Services.AddScoped<IRabbitMqService, RabbitMqService>();
+
+// JSON serialization performans optimizasyonları
+builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+{
+    options.SerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+    options.SerializerOptions.WriteIndented = false; // Minimize JSON size
+    options.SerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+    options.SerializerOptions.PropertyNameCaseInsensitive = true;
+});
 builder.Services.AddHttpLogging((opt) =>
 {
     opt.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.All;
@@ -34,18 +52,25 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hotels Hub API V1");
+        // Basit konfigürasyon - tüm optimizasyonları kaldırdık
+    });
 }
 
-//custom
+//custom middlewares - Güvenli olanlar açık
 app.UseExceptionHandlingMiddleware();
-
-//custom
 app.UseRequestLogMiddleware();
-
 app.UseTimesMiddleware();
 
+// Static files middleware ekleniyor
+app.UseStaticFiles();
+
 app.UseRouting();
+
+// CORS middleware ekleniyor
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 

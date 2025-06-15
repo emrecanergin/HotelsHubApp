@@ -23,7 +23,14 @@ namespace HotelsHubApp.WebAPI.Extensions
         {
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo 
+                { 
+                    Title = "Hotels Hub API", 
+                    Version = "v1" 
+                });
+            });
             builder.Services.AddHealthChecks();
             builder.Services.Configure<RedisOptions>(builder.Configuration.GetSection("RedisOptions"));
             builder.Services.AddDependencyResolvers(new IBaseModule[] { new CoreModule() });
@@ -34,6 +41,13 @@ namespace HotelsHubApp.WebAPI.Extensions
             builder.Services.AddScoped<ISearchRepository, SearchRepository>();
             builder.Services.AddScoped<IPublisherService, PublisherService>();
 
+
+            // Request timeout ayarı
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(2);
+                options.Limits.RequestHeadersTimeout = TimeSpan.FromMinutes(2);
+            });
 
             builder.Services.AddControllers().AddNewtonsoftJson(options =>
             {

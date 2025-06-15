@@ -20,6 +20,14 @@ namespace HotelsHubApp.LoggingWorkerService.RabbitMq
         public void Consume(string queueName,LogLevel logLevel)
         {
             var consumer = GetRabbitMQConsumer(out IModel channel);
+            
+            // Queue'yu declare et (oluştur) - eğer yoksa
+            channel.QueueDeclare(queue: queueName,
+                                durable: false,
+                                exclusive: false,
+                                autoDelete: false,
+                                arguments: null);
+            
             consumer.Received += (model, ea) =>
             {
                 var body = ea.Body;

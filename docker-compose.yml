@@ -40,7 +40,7 @@ services:
     ports:
       - '1434:1433'
     environment:
-      SA_PASSWORD: 'YourPassword123!'
+      SA_PASSWORD: ${SQL_SERVER_PASSWORD:-YourPassword123!}
       ACCEPT_EULA: 'Y'
     volumes:
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
@@ -67,6 +67,7 @@ services:
         condition: service_healthy
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
       - Hotelbeds__ApiKey=${HOTELBEDS_API_KEY}
       - Hotelbeds__SecretKey=${HOTELBEDS_SECRET_KEY}
     restart: unless-stopped
@@ -76,6 +77,8 @@ services:
       context: .
       dockerfile: HotelsHubApp.LoggingWorkerService/Dockerfile
     depends_on:
-      - rabbitmq
-      - mongodb
+      rabbitmq:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
     restart: unless-stopped 

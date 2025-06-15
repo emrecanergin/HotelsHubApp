@@ -28,12 +28,12 @@ namespace HotelsHubApp.Core.DependencyResolvers.Microsoft
             {
                 var configuration = serviceProvider.GetRequiredService<IConfiguration>();
                 c.BaseAddress = new Uri("https://api.test.hotelbeds.com/");
+                c.Timeout = TimeSpan.FromSeconds(60); // 60 saniye timeout
                 c.DefaultRequestHeaders.Add("Accept", "application/json");
                 c.DefaultRequestHeaders.Add("Accept-Encoding", "*");
                 var apiKey = configuration["Hotelbeds:ApiKey"] ?? "apikey";
-                var secretKey = configuration["Hotelbeds:SecretKey"] ?? "sharedsecret";
                 c.DefaultRequestHeaders.Add("Api-key", apiKey);
-                c.DefaultRequestHeaders.Add("X-Signature", Signature.CreateSignature(apiKey, secretKey));
+                // X-Signature her request'te dinamik hesaplanacak
             });
         }
     }

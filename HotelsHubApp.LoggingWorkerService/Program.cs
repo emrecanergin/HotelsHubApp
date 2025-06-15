@@ -7,6 +7,11 @@ using HotelsHubApp.LoggingWorkerService.RabbitMq;
 using Serilog;
 
 var builder = Host.CreateApplicationBuilder(args);
+
+// Configuration dosyalarını ekle
+builder.Configuration.AddJsonFile("appsettings.worker.json", optional: false, reloadOnChange: true);
+builder.Configuration.AddJsonFile($"appsettings.worker.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
 builder.Services.AddSingleton(Log.Logger);
 builder.Services.AddSingleton<IMessageConsumer, MessageConsumer>();
 builder.Services.AddSingleton<IRabbitMqService, RabbitMqService>();
@@ -22,9 +27,6 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 // add the provider
 builder.Logging.AddSerilog();
-
-
-
 
 var host = builder.Build();
 host.Run();
