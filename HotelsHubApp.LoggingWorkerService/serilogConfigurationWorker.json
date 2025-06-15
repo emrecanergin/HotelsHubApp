@@ -6,7 +6,7 @@
       {
         "Name": "MongoDB",
         "Args": {
-          "databaseUrl": "mongodb://localhost:1881/Logs",
+          "databaseUrl": "mongodb://mongodb:27017/Logs",
           "collectionName": "TestLogs"
         }
       }

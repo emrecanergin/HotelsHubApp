@@ -7,6 +7,7 @@ using HotelsHubApp.WebAPI.Middleware;
 using Microsoft.Extensions.DependencyInjection;
 using RabbitMQ.Client;
 using Serilog;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,16 +38,19 @@ builder.Services.AddHttpLogging((opt) =>
     opt.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.All;
 });
 
+// Serilog Configuration - Configure from separate config file like worker service
+var serilogConfig = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("serilogConfiguration.json")
+    .Build();
 
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(serilogConfig)
+    .CreateLogger();
 
-builder.Host.UseSerilog((context,config) =>
-{
-    config.ReadFrom.Configuration(context.Configuration);
-});
-
+builder.Host.UseSerilog();
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

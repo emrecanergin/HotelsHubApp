@@ -32,7 +32,12 @@ namespace HotelsHubApp.LoggingWorkerService.RabbitMq
             {
                 var body = ea.Body;
                 var message = Encoding.UTF8.GetString(body.ToArray());
-                _logger.Log(logLevel, message,$"{message}");
+                
+                // Serilog template format ile doğru logging
+                Log.Information("RabbitMQ Message from {QueueName}: {Message}", queueName, message);
+                
+                // Microsoft ILogger ile de loglama (fallback)
+                _logger.LogInformation("Processed message from queue {QueueName}: {Message}", queueName, message);
             };
 
             channel.BasicConsume(queueName, true, consumer);
